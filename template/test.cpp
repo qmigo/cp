@@ -17,21 +17,15 @@ ofstream fout(kOutputFilename);
 
 void solve()
 {
-  int t;
-  cin>>t;
-  int ans = 0;
-  while(t--)
-  {
-    string s;
-    cin>>s;
-    if(s[1]=='+')ans++;
-    else ans--;
-  }
-  cout<<ans<<"\n";
+  
 }
 
 int32_t main() {
   
+  int t;
+  cin>>t;
+  while(t--)
   solve();
+
   fout.close();
 }
