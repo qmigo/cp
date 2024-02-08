@@ -30,13 +30,14 @@
 #define int long long
 using namespace std;
 
-#define cin fin
-#define cout fout
-const string kInputFilename = "../io/input.txt";
-const string kOutputFilename = "../io/output.txt";
-ifstream fin(kInputFilename);
-ofstream fout(kOutputFilename);
+// #define cin fin
+// #define cout fout
+// const string kInputFilename = "../io/input.txt";
+// const string kOutputFilename = "../io/output.txt";
+// ifstream fin(kInputFilename);
+// ofstream fout(kOutputFilename);
 
+// disjoint set
 class DisjointSet {
 private:
     vector<int> parent, rank;
@@ -74,11 +75,69 @@ public:
     }
 };
 
+vector<int> path, ans;
+bool found;
+
+void dfs(int v, int p, unordered_map<int, vector<int>> &g, int f){
+    path.push_back(v);
+    if(v == f){
+        ans = path;
+        found = true;
+        return;
+    }
+    for(int u: g[v]){
+        if(u != p) dfs(u, v, g, f);
+        if (found) return;
+    }
+    path.pop_back();
+}
+
 void solve()
 {
-  int n;
-  cin>>n;
-  cout<<n<<"\n";
+  int v,e;
+  cin>>v>>e;
+
+  vector<vector<int>> edges;
+  unordered_map<int, vector<int>> mst;
+
+  for(int i=0;i<e;i++) {
+    int x,y,w;
+    cin>>x>>y>>w;
+    edges.push_back({w,x,y});
+  }  
+
+  sort(edges.rbegin(), edges.rend());
+  
+  DisjointSet ds(v+1);
+  int src,dst,wei;
+  for(auto&i:edges) {
+    int w,x,y;
+    w = i[0];
+    x = i[1];
+    y = i[2];
+    
+    if(ds.union_sets(x,y)) {
+      mst[x].push_back(y);
+      mst[y].push_back(x);
+    }
+    else {
+      src = x;
+      dst = y;
+      wei = w;
+    }
+  }
+
+  found = false;
+  path.resize(0);
+
+  dfs(src, -1, mst, dst);
+  cout<<wei<<" "<<ans.size()<<"\n";
+  for(auto&i:ans) cout<<i<<" ";
+  cout<<"\n";
+  
+  path.clear();
+  ans.clear();
+
 }
 
 int32_t main() {

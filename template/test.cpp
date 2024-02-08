@@ -1,6 +1,10 @@
 // Ankur Mishra
 // CP Template
 
+// striver sheet
+// https://takeuforward.org/interview-experience/strivers-cp-sheet/
+
+
 #include<bits/stdc++.h>
 #define cin fin
 #define cout fout
@@ -17,7 +21,7 @@ ofstream fout(kOutputFilename);
 
 void solve()
 {
-  
+  // 5
 }
 
 int32_t main() {
